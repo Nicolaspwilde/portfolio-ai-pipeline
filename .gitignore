@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.env
+data/*.json
+sheets/holdings.csv
+sheets/watchlist.csv
+.DS_Store

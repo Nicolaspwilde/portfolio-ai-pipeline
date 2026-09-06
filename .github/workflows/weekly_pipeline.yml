@@ -1,0 +1,31 @@
+name: Weekly portfolio pipeline
+
+on:
+  schedule:
+    - cron: "30 3 * * 1"  # Mondays 9:00 AM IST (03:30 UTC)
+  workflow_dispatch: {}
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch market data
+        run: python scripts/fetch_market_data.py
+
+      - name: Fetch FII/DII data
+        run: python scripts/fetch_fii_dii.py
+
+      - name: Fetch news & policy
+        run: python scripts/fetch_news.py
+
+      # TODO: add AI analyst + reviewer steps, newsletter generation, delivery
